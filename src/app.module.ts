@@ -10,6 +10,8 @@ import {UserEntity} from "./users/entities/user.entity";
 import {SkillEntity} from "./skills/entities/skill.entity";
 import {AuthentificationMiddleware} from "./cvs/authentification.middleware";
 import {MulterModule} from "@nestjs/platform-express";
+import {ServeStaticModule} from "@nestjs/serve-static";
+import * as path from "path";
 
 @Module({
   imports: [
@@ -28,7 +30,10 @@ import {MulterModule} from "@nestjs/platform-express";
       ),
       SkillsModule,
       UsersModule,
-      MulterModule
+      MulterModule,
+      ServeStaticModule.forRoot({
+          rootPath:path.join(__dirname,'/uploads')
+      })
   ],
   controllers: [AppController],
   providers: [AppService],
