@@ -13,7 +13,7 @@ export class SkillsController {
 
     return this.skillsService.randomize()
   }
-  @Post("/create")
+  @Post("")
   create(@Body() createSkillDto: CreateSkillDto) {
     return this.skillsService.create(createSkillDto);
   }

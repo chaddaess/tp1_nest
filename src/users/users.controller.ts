@@ -12,7 +12,7 @@ export class UsersController {
    return this.usersService.randomize()
   }
 
-  @Post('/create')
+  @Post('')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }

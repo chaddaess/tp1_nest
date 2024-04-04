@@ -15,5 +15,5 @@ export class UserEntity{
         ()=>CvEntity,
         (cv:CvEntity)=>cv.user
     )
-    cvs:CvEntity
+    cvs?:CvEntity
 }

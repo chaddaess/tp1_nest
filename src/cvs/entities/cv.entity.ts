@@ -27,12 +27,13 @@ export class CvEntity {
     job:string;
     @Column()
     path:string;
-    @ManyToMany(()=>SkillEntity)
+    @ManyToMany(()=>SkillEntity,{ cascade: true })
     @JoinTable()
-    skills:SkillEntity[]
+    skills?:SkillEntity[]
     @ManyToOne(
         ()=>UserEntity,
-        (user:UserEntity)=>user.cvs
+        (user:UserEntity)=>user.cvs,
+{ cascade: true,lazy:false}
     )
     user:UserEntity
 

@@ -1,4 +1,5 @@
 import {SkillEntity} from "../../skills/entities/skill.entity";
+import {UserEntity} from "../../users/entities/user.entity";
 
 export class CreateCvDto {
     id: string;
@@ -13,5 +14,7 @@ export class CreateCvDto {
     job: string;
 
     path: string;
+
+    user?:UserEntity;
 
 }

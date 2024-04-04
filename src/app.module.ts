@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {MiddlewareConsumer, Module, NestMiddleware, NestModule} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CvsModule } from './cvs/cvs.module';
@@ -8,6 +8,7 @@ import { SkillsModule } from './skills/skills.module';
 import { UsersModule } from './users/users.module';
 import {UserEntity} from "./users/entities/user.entity";
 import {SkillEntity} from "./skills/entities/skill.entity";
+import {AuthentificationMiddleware} from "./cvs/authentification.middleware";
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import {SkillEntity} from "./skills/entities/skill.entity";
             password:"",
             database:"nest_test",
             entities:[UserEntity,SkillEntity,CvEntity],
-            synchronize:true
+            synchronize:true,
           }
       ),
       SkillsModule,
@@ -30,4 +31,10 @@ import {SkillEntity} from "./skills/entities/skill.entity";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule{
+    configure(consumer: MiddlewareConsumer): any {
+        consumer.apply(AuthentificationMiddleware)
+            .forRoutes('/v2/cvs')
+    }
+
+}
