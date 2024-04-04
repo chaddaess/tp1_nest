@@ -13,6 +13,4 @@ export class CreateCvDto {
 
     path: string;
 
-    skills: SkillEntity[];
-
 }

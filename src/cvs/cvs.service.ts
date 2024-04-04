@@ -4,8 +4,9 @@ import { UpdateCvDto } from './dto/update-cv.dto';
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {CvEntity} from "./entities/cv.entity";
-import {randDirectoryPath, randFirstName, randJobTitle, randLastName} from "@ngneat/falso";
+import {randDirectoryPath, randFirstName, randJobTitle, randLastName, randSkill, randUuid} from "@ngneat/falso";
 import {randomStringGenerator} from "@nestjs/common/utils/random-string-generator.util";
+import {SkillEntity} from "../skills/entities/skill.entity";
 
 @Injectable()
 export class CvsService {
@@ -16,6 +17,18 @@ export class CvsService {
   {}
   async create(createCvDto:CreateCvDto) {
     return await this.cvRepository.save(createCvDto)
+  }
+  randomize(){
+    const  cv:CreateCvDto={
+      id:randUuid(),
+      name: randLastName(),
+      firstName:randFirstName(),
+      cin:randomStringGenerator(),
+      job:randJobTitle(),
+      path:randDirectoryPath(),
+    }
+    console.log(cv)
+    return cv
   }
 
   findAll() {

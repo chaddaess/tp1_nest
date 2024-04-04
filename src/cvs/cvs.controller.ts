@@ -15,15 +15,7 @@ export class CvsController {
   @Get("/random")
   random()
   {
-    const cv={
-      name: randLastName(),
-      firstName:randFirstName(),
-      cin:randomStringGenerator(),
-      job:randJobTitle(),
-      path:randDirectoryPath()
-    }
-    console.log(cv)
-    return cv
+    return this.cvsService.randomize()
   }
 
   @Post('/create')
