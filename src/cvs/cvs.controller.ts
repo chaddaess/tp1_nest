@@ -2,12 +2,31 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { CvsService } from './cvs.service';
 import { CreateCvDto } from './dto/create-cv.dto';
 import { UpdateCvDto } from './dto/update-cv.dto';
+import {randDirectoryPath, randFirstName, randJobTitle, randLastName} from "@ngneat/falso";
+import {randomStringGenerator} from "@nestjs/common/utils/random-string-generator.util";
+
 
 @Controller('cvs')
 export class CvsController {
-  constructor(private readonly cvsService: CvsService) {}
+  constructor(
+      private readonly cvsService: CvsService,
+  ) {}
 
-  @Post()
+  @Get("/random")
+  random()
+  {
+    const cv={
+      name: randLastName(),
+      firstName:randFirstName(),
+      cin:randomStringGenerator(),
+      job:randJobTitle(),
+      path:randDirectoryPath()
+    }
+    console.log(cv)
+    return cv
+  }
+
+  @Post('/create')
   create(@Body() createCvDto: CreateCvDto) {
     return this.cvsService.create(createCvDto);
   }

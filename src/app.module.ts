@@ -3,9 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CvsModule } from './cvs/cvs.module';
 import {TypeOrmModule} from "@nestjs/typeorm";
-import {UserEntity} from "./cvs/entities/user.entity";
-import {SkillEntity} from "./cvs/entities/skill.entity";
 import {CvEntity} from "./cvs/entities/cv.entity";
+import { SkillsModule } from './skills/skills.module';
+import { UsersModule } from './users/users.module';
+import {UserEntity} from "./users/entities/user.entity";
+import {SkillEntity} from "./skills/entities/skill.entity";
 
 @Module({
   imports: [
@@ -15,13 +17,15 @@ import {CvEntity} from "./cvs/entities/cv.entity";
             'type':"mysql",
             host:"localhost",
             port:3306,
-            username:"",
+            username:"root",
             password:"",
             database:"nest_test",
             entities:[UserEntity,SkillEntity,CvEntity],
             synchronize:true
           }
-      )
+      ),
+      SkillsModule,
+      UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,15 +1,24 @@
-import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryColumn} from "typeorm";
-import {SkillEntity} from "./skill.entity";
-import {UserEntity} from "./user.entity";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    PrimaryColumn,
+    PrimaryGeneratedColumn
+} from "typeorm";
+import {SkillEntity} from "../../skills/entities/skill.entity";
+import {UserEntity} from "../../users/entities/user.entity";
 
 @Entity()
 export class CvEntity {
-    @PrimaryColumn()
-    id:number;
+    @PrimaryGeneratedColumn('uuid')
+    id:string;
     @Column()
     name:string;
     @Column()
-    firstname:string;
+    firstName:string;
     @Column()
     cin:string;
     @Column()
