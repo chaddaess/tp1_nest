@@ -58,8 +58,13 @@ export class CvsService {
 
 
 
-  async findAll() {
-    return await this.cvRepository.find({relations:['user','skills']})
+  async findAll(pageNumber:number=1,pageSize:number=3):Promise<CvEntity[]> {
+    const cvs:CvEntity[] = await this.cvRepository.find({
+      relations: ['user', 'skills'],
+      skip:(pageSize-1)*pageNumber,
+      take:pageSize
+    });
+    return cvs;
   }
 
   async findOne(id: string) {

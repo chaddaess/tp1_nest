@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Version, Query, Req} from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Version, Query, Req, ParseIntPipe} from '@nestjs/common';
 import { CvsService } from './cvs.service';
 import { CreateCvDto } from './dto/create-cv.dto';
 import { UpdateCvDto } from './dto/update-cv.dto';
@@ -80,8 +80,11 @@ export class CvsControllerV2 {
   }
 
   @Get()
-  findAll() {
-    return this.cvsService.findAll();
+  findAll(
+      @Query('pageNumber', ParseIntPipe) pageNumber: number = 1,
+      @Query('pageSize', ParseIntPipe) pageSize: number = 10,
+  ) {
+    return this.cvsService.findAll(pageNumber, pageSize);
   }
 
   @Get('/find/:age/:chaine?')
