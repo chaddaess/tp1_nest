@@ -1,8 +1,8 @@
-import {Inject, Injectable} from '@nestjs/common';
+import {Inject, Injectable, NotFoundException} from '@nestjs/common';
 import { CreateCvDto } from './dto/create-cv.dto';
 import { UpdateCvDto } from './dto/update-cv.dto';
 import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import {DeepPartial, DeleteResult, Repository} from "typeorm";
 import {CvEntity} from "./entities/cv.entity";
 import {randDirectoryPath, randFirstName, randJobTitle, randLastName, randSkill, randUuid} from "@ngneat/falso";
 import {randomStringGenerator} from "@nestjs/common/utils/random-string-generator.util";
@@ -15,9 +15,7 @@ export class CvsService {
       private cvRepository:Repository<CvEntity>
   )
   {}
-  async create(createCvDto:CreateCvDto) {
-    return await this.cvRepository.save(createCvDto)
-  }
+
   randomize(){
     const  cv:CreateCvDto={
       id:randUuid(),
@@ -27,24 +25,41 @@ export class CvsService {
       job:randJobTitle(),
       path:randDirectoryPath(),
     }
-    console.log(cv)
     return cv
   }
-
-  findAll() {
-    return `This action returns all cvs`;
+  async create(createCvDto:CreateCvDto) {
+    return await this.cvRepository.save(createCvDto)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cv`;
+
+  async findAll() {
+    return await this.cvRepository.find()
   }
 
-  update(id: number, updateCvDto: UpdateCvDto) {
-    return `This action updates a #${id} cv`;
+  async findOne(id: string) {
+    return await this.cvRepository.findOneBy({
+      id:id,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cv`;
+  async update(id: string, updateCvDto: DeepPartial<CvEntity>):Promise<CvEntity>{
+    const cv=await this.cvRepository.preload({
+      id:id,
+      ...updateCvDto
+    })
+    if(!cv){
+      throw  new NotFoundException(`cv d'id ${id} n'existe pas dans la base`)
+    }
+    return await this.cvRepository.save(cv)
+  }
+
+  async remove(id: string):Promise<DeleteResult> {
+    const result= await this.cvRepository.delete(id)
+    if(!result.affected){
+      throw new NotFoundException(`cv d'id ${id} n'existe pas dans la base`)
+    }else{
+      return result
+    }
   }
 
 }

@@ -30,16 +30,16 @@ export class CvsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cvsService.findOne(+id);
+    return this.cvsService.findOne(id)
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCvDto: UpdateCvDto) {
-    return this.cvsService.update(+id, updateCvDto);
+    return this.cvsService.update(id, updateCvDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.cvsService.remove(+id);
+    return this.cvsService.remove(id);
   }
 }
