@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import {UserEntity} from "./users/entities/user.entity";
 import {SkillEntity} from "./skills/entities/skill.entity";
 import {AuthentificationMiddleware} from "./cvs/authentification.middleware";
+import {MulterModule} from "@nestjs/platform-express";
 
 @Module({
   imports: [
@@ -26,7 +27,8 @@ import {AuthentificationMiddleware} from "./cvs/authentification.middleware";
           }
       ),
       SkillsModule,
-      UsersModule
+      UsersModule,
+      MulterModule
   ],
   controllers: [AppController],
   providers: [AppService],

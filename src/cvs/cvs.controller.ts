@@ -1,4 +1,17 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Version, Query, Req, ParseIntPipe} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Version,
+  Query,
+  Req,
+  ParseIntPipe,
+  UploadedFile, UseInterceptors, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
+} from '@nestjs/common';
 import { CvsService } from './cvs.service';
 import { CreateCvDto } from './dto/create-cv.dto';
 import { UpdateCvDto } from './dto/update-cv.dto';
@@ -6,6 +19,7 @@ import {randDirectoryPath, randFirstName, randJobTitle, randLastName} from "@ngn
 import {randomStringGenerator} from "@nestjs/common/utils/random-string-generator.util";
 import {version} from "eslint-plugin-prettier";
 import * as path from "path";
+import {FileInterceptor, MulterModule} from "@nestjs/platform-express";
 
 
 @Controller(
@@ -100,6 +114,26 @@ export class CvsControllerV2 {
   update(@Param('id') id: string, @Body() updateCvDto: UpdateCvDto,@Req()req:Request) {
     let userId=req['userInfo']['user-id']
     return this.cvsService.updateV2(id, updateCvDto,userId);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file',{
+    dest: 'uploads/'
+  }))
+  uploadFile(@UploadedFile(
+                new ParseFilePipe({
+                  validators:[
+                      new MaxFileSizeValidator({maxSize:1000000}),
+                      new FileTypeValidator({fileType:/.jpeg|jpg|png$/})
+                  ]
+                })
+             )
+             file:Express.Multer.File,
+             @Param('id')id:string,
+
+  )
+  {
+    console.log(file)
   }
 
   @Delete(':id')
