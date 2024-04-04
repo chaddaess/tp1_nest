@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Version, Query} from '@nestjs/common';
 import { CvsService } from './cvs.service';
 import { CreateCvDto } from './dto/create-cv.dto';
 import { UpdateCvDto } from './dto/update-cv.dto';
@@ -28,6 +28,10 @@ export class CvsController {
     return this.cvsService.findAll();
   }
 
+  @Get('/find/:age/:chaine?')
+  find(@Param('age')age:number,@Param('chaine')chaine:string){
+    return this.cvsService.find(age,chaine)
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.cvsService.findOne(id)

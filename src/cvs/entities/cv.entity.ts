@@ -20,6 +20,8 @@ export class CvEntity {
     @Column()
     firstName:string;
     @Column()
+    age:number
+    @Column()
     cin:string;
     @Column()
     job:string;
@@ -33,6 +35,7 @@ export class CvEntity {
         (user:UserEntity)=>user.cvs
     )
     user:UserEntity
+
 
 
 }
