@@ -40,6 +40,7 @@ export class CvsController {
     return this.cvsService.randomize()
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('')
   create(@Body() createCvDto: CreateCvDto) {
     return this.cvsService.create(createCvDto);
@@ -51,26 +52,28 @@ export class CvsController {
     return this.cvsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/find/:age/:chaine?')
   find(@Param('age')age:number,@Param('chaine')chaine:string){
     return this.cvsService.find(age,chaine)
   }
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.cvsService.findOne(id)
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCvDto: UpdateCvDto) {
     return this.cvsService.update(id, updateCvDto);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.cvsService.remove(id);
   }
 }
-
 
 @Controller(
     {
