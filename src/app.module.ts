@@ -16,6 +16,8 @@ import * as path from "path";
 import {User} from "./authentication/entities/user.entity";
 import {JwtModule} from "@nestjs/jwt";
 import process from "process";
+import { RolesAuthGuard} from "./authentication/Guards/role-auth.guard";
+import {APP_GUARD} from "@nestjs/core";
 
 @Module({
   imports: [

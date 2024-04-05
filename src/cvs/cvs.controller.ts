@@ -21,6 +21,9 @@ import {version} from "eslint-plugin-prettier";
 import * as path from "path";
 import {FileInterceptor, MulterModule} from "@nestjs/platform-express";
 import {JwtAuthGuard} from "../authentication/Guards/jwt-auth.guard";
+import {Request} from "express";
+import {Roles} from "../authentication/decorators/roles.decorator";
+import {RolesAuthGuard} from "../authentication/Guards/role-auth.guard";
 
 
 @Controller(
@@ -47,8 +50,11 @@ export class CvsController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Roles('admin')
+  @UseGuards(RolesAuthGuard)
   @Get()
-  findAll() {
+  findAll(@Req()request:Request) {
+    console.log(request.user)
     return this.cvsService.findAll();
   }
 
