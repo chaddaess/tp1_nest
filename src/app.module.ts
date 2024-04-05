@@ -14,6 +14,8 @@ import {ServeStaticModule} from "@nestjs/serve-static";
 import { AuthenticationModule } from './authentication/authentication.module';
 import * as path from "path";
 import {User} from "./authentication/entities/user.entity";
+import {JwtModule} from "@nestjs/jwt";
+import process from "process";
 
 @Module({
   imports: [
@@ -36,7 +38,8 @@ import {User} from "./authentication/entities/user.entity";
       ServeStaticModule.forRoot({
           rootPath:path.join(__dirname,'/uploads')
       }),
-      AuthenticationModule
+      AuthenticationModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
