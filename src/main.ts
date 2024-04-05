@@ -10,7 +10,6 @@ import {JwtAuthGuard} from "./authentication/Guards/jwt-auth.guard";
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   dotenv.config();
-  app.useGlobalGuards(new JwtAuthGuard())
   app.useGlobalPipes(new ValidationPipe())
   app.enableVersioning(
       {

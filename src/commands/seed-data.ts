@@ -22,13 +22,15 @@ async function seedData() {
     const app = await NestFactory.createApplicationContext(AppModule);
 
     const userService:UsersService=app.get(UsersService)
-    // let user:CreateUserDto=userService.randomize();
-    // await userService.create(user);
+    let user:CreateUserDto=userService.randomize();
+    await userService.create(user);
     const skillService:SkillsService=app.get(SkillsService)
-    // let skill:CreateSkillDto=skillService.randomize()
-    // await  skillService.create(skill)
+    let skill:CreateSkillDto=skillService.randomize()
+    await  skillService.create(skill)
     const cvService:CvsService=app.get(CvsService)
     let cv:CreateCvDto=cvService.randomize();
+    cv.user=user;
+   //Todo: add skills to cv
     await cvService.create(cv);
     await app.close()
 }

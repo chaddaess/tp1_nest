@@ -1,6 +1,7 @@
 import {Roles} from "../decorators/roles.decorator";
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import {use} from "passport";
 
 @Injectable()
 export class RolesAuthGuard implements CanActivate {
@@ -12,6 +13,7 @@ export class RolesAuthGuard implements CanActivate {
             return true;
         }
         const request = context.switchToHttp().getRequest();
+        console.log(request.role)
         return (request.user.role==roles)
     }
 }

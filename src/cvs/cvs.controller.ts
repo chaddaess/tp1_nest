@@ -48,10 +48,9 @@ export class CvsController {
   create(@Body() createCvDto: CreateCvDto) {
     return this.cvsService.create(createCvDto);
   }
-
-  @UseGuards(JwtAuthGuard)
   @Roles('admin')
   @UseGuards(RolesAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Req()request:Request) {
     console.log(request.user)
