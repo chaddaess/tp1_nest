@@ -36,6 +36,7 @@ export class AuthenticationService {
     let hashedPassword:string=sha256(createUserDto.password)+salt
     let user:User={
       ...createUserDto,
+      role:"member",
       password:hashedPassword,
       salt:salt,
     }
@@ -55,6 +56,7 @@ export class AuthenticationService {
     let payload={
       email:user.email,
       username:user.username,
+      role:user.role
     }
     const jwt:string=this.jwtService.sign(payload,{secret:" "});
     return {

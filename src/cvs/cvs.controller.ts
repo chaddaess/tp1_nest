@@ -10,7 +10,7 @@ import {
   Query,
   Req,
   ParseIntPipe,
-  UploadedFile, UseInterceptors, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator
+  UploadedFile, UseInterceptors, ParseFilePipe, MaxFileSizeValidator, FileTypeValidator, UseGuards
 } from '@nestjs/common';
 import { CvsService } from './cvs.service';
 import { CreateCvDto } from './dto/create-cv.dto';
@@ -20,6 +20,7 @@ import {randomStringGenerator} from "@nestjs/common/utils/random-string-generato
 import {version} from "eslint-plugin-prettier";
 import * as path from "path";
 import {FileInterceptor, MulterModule} from "@nestjs/platform-express";
+import {JwtAuthGuard} from "../authentication/Guards/jwt-auth.guard";
 
 
 @Controller(
@@ -44,6 +45,7 @@ export class CvsController {
     return this.cvsService.create(createCvDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.cvsService.findAll();
