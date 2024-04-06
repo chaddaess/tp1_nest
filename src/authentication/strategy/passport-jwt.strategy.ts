@@ -5,13 +5,13 @@ import process from "process";
 import {PayloadInterface} from "../Interfaces/payload.interface";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
-import {User} from "../entities/user.entity";
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor(
-        @InjectRepository(User)
-        private userRepository:Repository<User>,
+        @InjectRepository(UserEntity)
+        private userRepository:Repository<UserEntity>,
 
     ) {
         super({
@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: PayloadInterface) {
-        let user:User=await this.userRepository.findOneBy({username:payload.username})
+        let user:UserEntity=await this.userRepository.findOneBy({username:payload.username})
         if(!user){
             throw new UnauthorizedException()
         }

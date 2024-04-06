@@ -13,7 +13,6 @@ import {MulterModule} from "@nestjs/platform-express";
 import {ServeStaticModule} from "@nestjs/serve-static";
 import { AuthenticationModule } from './authentication/authentication.module';
 import * as path from "path";
-import {User} from "./authentication/entities/user.entity";
 import {JwtModule} from "@nestjs/jwt";
 import process from "process";
 import { RolesAuthGuard} from "./authentication/Guards/role-auth.guard";
@@ -30,7 +29,7 @@ import {APP_GUARD} from "@nestjs/core";
             username:"root",
             password:"",
             database:"nest_test",
-            entities:[UserEntity,SkillEntity,CvEntity,User],
+            entities:[UserEntity,SkillEntity,CvEntity],
             synchronize:true,
           }
       ),

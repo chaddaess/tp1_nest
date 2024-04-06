@@ -1,10 +1,11 @@
 import {Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 import {CvEntity} from "../../cvs/entities/cv.entity";
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class UserEntity{
     @PrimaryGeneratedColumn('uuid')
-    id:string;
+    id?:string;
     @Column()
     username:string;
     @Column()
@@ -15,5 +16,11 @@ export class UserEntity{
         ()=>CvEntity,
         (cv:CvEntity)=>cv.user
     )
+
     cvs?:CvEntity
+    @Column()
+    @Exclude()
+    salt?:string
+    @Column()
+    role?:string
 }

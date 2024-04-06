@@ -18,7 +18,6 @@ export class UsersService {
   }
   randomize(){
     const user:CreateUserDto = {
-      id:randUuid(),
       email: randEmail(),
       username: randFullName(),
       password:randPassword()
